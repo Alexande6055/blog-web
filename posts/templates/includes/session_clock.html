@@ -1,0 +1,19 @@
+<div id="timer" class="fixed bottom-4 right-4 ...">
+    Tiempo de sesión: <span id="time-display">00:00:00</span>
+</div>
+
+<script>
+    // Lógica similar a tu useEffect pero en JS Vanilla
+    let timeLeft = 3600; // Puedes pasar esto desde Django context
+    const display = document.getElementById('time-display');
+
+    setInterval(() => {
+        timeLeft--;
+        if (timeLeft <= 0) window.location.href = "/logout/";
+
+        const h = Math.floor(timeLeft / 3600).toString().padStart(2, '0');
+        const m = Math.floor((timeLeft % 3600) / 60).toString().padStart(2, '0');
+        const s = (timeLeft % 60).toString().padStart(2, '0');
+        display.innerText = `${h}:${m}:${s}`;
+    }, 1000);
+</script>

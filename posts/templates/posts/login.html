@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Gestor Documental</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@700&display=swap"
+        rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#E86121',
+                        secondary: '#4D4D4D',
+                        accent: '#F29100',
+                        'primary-light': '#FCECE5',
+                        'header-bg': '#9C3C0D',
+                        'bg-base': '#F3F4F6',
+                        'bg-sidebar': '#E5E7EB',
+                        surface: '#FFFFFF',
+                    },
+                    fontFamily: {
+                        // Aquí vinculamos las fuentes descargadas con las clases de Tailwind
+                        main: ['Montserrat', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        'pushak': '4px',
+                        'card': '8px',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Un pequeño ajuste para asegurar que las fuentes se apliquen por defecto */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-bg-base">
+
+    <main class="min-h-screen flex items-center justify-center p-4 font-body">
+        <div class="w-full max-w-md">
+            <div class="bg-surface rounded-card shadow-xl overflow-hidden border border-gray-100">
+
+                <div class="p-8 text-center bg-white border-b border-gray-50">
+                    <div class="flex justify-center mb-6">
+                        <img src="{% static 'img/pushak-large.png' %}" alt="Logo" class="h-16 w-auto" />
+                    </div>
+                    <h1 class="font-main text-2xl font-bold text-secondary uppercase tracking-tight">Gestor Documental
+                    </h1>
+                    <p class="text-gray-500 mt-2 text-sm">Ingrese sus credenciales para acceder a su cuenta</p>
+                </div>
+
+                <form method="POST" action="{% url 'login' %}" class="p-8 space-y-6">
+                    {% csrf_token %}
+
+                    {% if error %}
+                    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-3 text-sm rounded shadow-sm">
+                        {{ error }}
+                    </div>
+                    {% endif %}
+
+                    <div>
+                        <label class="block text-sm font-semibold text-secondary mb-2 font-main">
+                            Usuario
+                        </label>
+                        <div class="relative">
+                            <input type="text" name="username" required
+                                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-pushak focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all text-secondary"
+                                placeholder="Ingrese su usuario" />
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <label class="text-sm font-semibold text-secondary font-main">
+                                Contraseña
+                            </label>
+                        </div>
+                        <div class="relative">
+                            <input type="password" name="password" required
+                                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-pushak focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all text-secondary"
+                                placeholder="••••••••" />
+                        </div>
+                    </div>
+
+                    <div class="bg-primary-light border-l-4 border-primary p-3 flex items-start gap-3 rounded-r-md">
+                        <p class="text-xs text-secondary leading-tight italic">
+                            Asegúrese de estar en la dirección oficial. Nunca comparta su clave con terceros.
+                        </p>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full bg-primary text-white font-main font-bold py-3 px-6 rounded-pushak hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
+                        INGRESAR
+                    </button>
+                </form>
+
+                <div class="px-8 py-4 bg-gray-50 border-t border-gray-100 text-center">
+                    <p class="text-xs text-gray-400 font-body">
+                        © 2026 Cooperativa de Ahorro y Crédito Pushak Runa Ltda.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

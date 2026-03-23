@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Gestor Documental{% endblock %}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@700&display=swap"
+        rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            /* 1. Definimos la fuente de la verdad aquí */
+            --color-primary: #E86121;
+            --color-secondary: #4D4D4D;
+            --color-bg-base: #F3F4F6;
+            --color-bg-sidebar: #E5E7EB;
+            --color-surface: #FFFFFF;
+            --radius-pushak: 4px;
+        }
+
+        body {
+            /* Aplicamos estilos globales */
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg-base);
+        }
+    </style>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        /* 2. Tailwind ahora "apunta" a esas variables */
+                        primary: 'var(--color-primary)',
+                        secondary: 'var(--color-secondary)',
+                        'bg-base': 'var(--color-bg-base)',
+                        'bg-sidebar': 'var(--color-bg-sidebar)',
+                        surface: 'var(--color-surface)',
+                    },
+                    borderRadius: {
+                        'pushak': 'var(--radius-pushak)',
+                    }
+                }
+            }
+        }
+    </script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+
+<body class="min-h-screen bg-[var(--color-bg-base)]">
+
+    {% include 'includes/header.html' %}
+
+    <div class="flex">
+        {% include 'includes/sidebar.html' %}
+
+        <main class="flex-1">
+            {% block content %}
+            {% endblock %}
+
+            {% include 'includes/session_clock.html' %}
+        </main>
+    </div>
+
+</body>
+
+</html>
