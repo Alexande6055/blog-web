@@ -1,0 +1,38 @@
+<!--
+    tabla de los roles disponibles con los botones de accion de editar y eliminar, 
+    el boton de agregar nuevo rol y el buscador para filtrar por nombre del rol
+-->
+
+<div>
+<h2>ROLES DISPONIBLES</h2>
+<form method="get_digit" action="{% url 'buscar_roles' %}">
+<label>Buscar por nombre del rol:</label>
+<input type="text" name="search" placeholder="Ingrese el nombre del rol">
+<button type="submit">Buscar</button>
+</form>
+<table>
+    <head>
+        <th colspan="2">Lista de Roles</th>
+    </head>
+    <tr>
+        <th>Nombre del Rol</th>
+        <th>Total permisos</th>
+        <th>Acciones</th>
+    </tr>
+    {% for rol in roles  %}
+    <tr>
+        <td>{{ rol.name }}</td>
+        <td>{{ rol.total_permisos }}</td>
+        <td>
+           <!-- Botones de acción -->
+            <button onclick="visualizarFormularioEdicion('{{ rol.id }}', '{{ rol.name }}')">
+                Editar
+            </button>
+            <a href="{% url 'buscar_roles' %}">Eliminar</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+    <div>
+        <div/>

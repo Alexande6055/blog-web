@@ -1,0 +1,117 @@
+<form id="grupo-form"
+hx-post="{% if rol_a_editar %}{% url 'home_edit' rol_a_editar.id %}{% else %}{% url 'home' %}{% endif %}"
+hx-target="#contenedor-tabla-roles"
+hx-swap="innerHTML" 
+@htmx:after-request="document.getElementById('contenedor-formulario').classList.add('hidden')"
+  class="space-y-6"
+  >
+    {% csrf_token %}
+    
+    <div x-data="permissionManager({ 
+            initialAvailable: {{ permisos_disponibles|safe }}, 
+            initialAssigned: {{ rol_a_editar.permissions|safe|default:'[]' }} 
+        })" 
+        class="space-y-4"
+    >
+        <input type="hidden" name="permissions" :value="JSON.stringify(lists.assigned.map(p => p.id))">
+
+        <div class="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 items-center">
+            
+            {% include "includes/snippets/_permission_list.html" with list_key="available" label="Permisos Disponibles" %}
+
+            <div class="flex md:flex-col gap-3 justify-center items-center">
+                <button @click="move('available', 'assigned')" type="button" 
+                        class="p-3 bg-primary text-white rounded-xl shadow-lg hover:-translate-y-0.5 transition-all disabled:opacity-20"
+                        :disabled="selected.available.length === 0">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
+                </button>
+                <button @click="move('assigned', 'available')" type="button" 
+                        class="p-3 bg-gray-800 text-white rounded-xl shadow-lg hover:-translate-y-0.5 transition-all disabled:opacity-20"
+                        :disabled="selected.assigned.length === 0">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path></svg>
+                </button>
+            </div>
+
+            {% include "includes/snippets/_permission_list.html" with list_key="assigned" label="Asignados al Rol" %}
+            
+        </div>
+         <div class="flex items-center justify-end gap-4 pt-6 mt-4 border-t border-gray-100">
+<button type="button" 
+        @click="document.getElementById('contenedor-formulario').classList.add('hidden')"
+        class="text-sm font-bold text-gray-400 hover:text-gray-600 transition-colors">
+    Descartar cambios
+</button>
+        <button type="submit" 
+                class="bg-primary text-white px-10 py-3 rounded-lg font-bold shadow-xl shadow-orange-200 hover:bg-orange-600 transform hover:-translate-y-1 transition-all active:scale-95">
+            {{ rol_a_editar|yesno:"Guardar Cambios,Crear Grupo Ahora" }}
+        </button>
+    </div>
+    </div>
+
+    </form>
+<style>
+    .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
+</style>
+
+<script>
+    document.addEventListener('alpine:init', () => {
+    Alpine.data('permissionManager', (config) => ({
+        // Agrupamos todo en objetos que usen las llaves 'available' y 'assigned'
+        lists: {
+            available: config.initialAvailable,
+            assigned: config.initialAssigned
+        },
+        search: {
+            available: '',
+            assigned: ''
+        },
+        selected: {
+            available: [],
+            assigned: []
+        },
+        lastSelectedIndex: null,
+
+        // Función que usa el snippet
+        getFilteredList(key) {
+            const term = this.search[key].toLowerCase();
+            return this.lists[key].filter(p => p.name.toLowerCase().includes(term));
+        },
+
+        isSelected(id, key) {
+            return this.selected[key].includes(id);
+        },
+
+        toggleSelection(event, id, key, index) {
+            const selectedList = this.selected[key];
+            const currentFiltered = this.getFilteredList(key);
+
+            if (event.shiftKey && this.lastSelectedIndex !== null) {
+                let start = Math.min(this.lastSelectedIndex, index);
+                let end = Math.max(this.lastSelectedIndex, index);
+                for (let i = start; i <= end; i++) {
+                    let item = currentFiltered[i];
+                    if (!selectedList.includes(item.id)) selectedList.push(item.id);
+                }
+            } else {
+                const idx = selectedList.indexOf(id);
+                if (idx > -1) selectedList.splice(idx, 1);
+                else selectedList.push(id);
+                this.lastSelectedIndex = index;
+            }
+        },
+
+        // Mover de una lista a otra de forma genérica
+        move(from, to) {
+            const itemsToMove = this.lists[from].filter(p => this.selected[from].includes(p.id));
+            this.lists[to].push(...itemsToMove);
+            this.lists[from] = this.lists[from].filter(p => !this.selected[from].includes(p.id));
+            this.selected[from] = [];
+            this.lastSelectedIndex = null;
+        }
+    }));
+});
+    
+</script>    
