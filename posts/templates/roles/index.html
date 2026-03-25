@@ -1,0 +1,44 @@
+{% extends 'layouts/base.html' %}
+
+{% load static %}
+
+{% block extra_js %}
+<script src="{% static 'js/modules/permission-manager.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+    <div class="bg-surface rounded-pushak shadow p-6">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-bold text-secondary">ROLES DISPONIBLES</h2>
+            <button type="button"
+                    hx-get="{% url 'rol_formulario' %}"
+                    hx-target="#contenedor-formulario"
+                    hx-swap="innerHTML"
+                    onclick="document.getElementById('contenedor-formulario').classList.remove('hidden')" 
+                    class="bg-primary text-white px-4 py-2 rounded-pushak hover:bg-orange-600 shadow-lg transition-all">
+                + Crear nuevo rol
+            </button>
+        </div>
+
+       {% include "includes/snippets/_tabla_roles.html" %}
+    </div>
+</div>
+
+<div id="contenedor-formulario" 
+     class="fixed inset-0 z-50 flex items-center justify-center {% if not rol_a_editar %}hidden{% endif %} bg-black bg-opacity-50 backdrop-blur-sm"
+     onclick="if(event.target.id === 'contenedor-formulario') this.classList.add('hidden')">
+    
+    <div class="bg-white w-full max-w-md mx-4 rounded-pushak shadow-2xl p-8 relative" onclick="event.stopPropagation()">
+        <button type="button"
+                onclick="document.getElementById('contenedor-formulario').classList.add('hidden')" 
+                class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        {% include "includes/formularios/create_edit_grupo_form.html" %}
+
+    </div>
+</div>
+
+{% endblock %}
+

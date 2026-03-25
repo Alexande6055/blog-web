@@ -2,25 +2,12 @@
     <label class="block text-sm font-bold text-secondary mb-2 uppercase">{{ label }}</label>
     
     <input type="text" 
-           x-model="search['{{ list_key }}']" 
-           placeholder="Buscar..." 
-           class="mb-2 w-full px-3 py-2 border border-gray-300 rounded-pushak outline-none text-sm focus:ring-2 focus:ring-primary">
+           class="search-input mb-2 w-full px-3 py-2 border border-gray-300 rounded-pushak outline-none text-sm focus:ring-2 focus:ring-primary"
+           data-list="{{ list_key }}"
+           placeholder="Buscar...">
     
-    <div class="flex-1 border border-gray-200 rounded-pushak overflow-y-auto bg-gray-50 select-none">
-        <template x-for="(perm, index) in getFilteredList('{{ list_key }}')" :key="perm.id">
-            <div @click="toggleSelection($event, perm.id, '{{ list_key }}', index)"
-                 :class="{
-                    'bg-primary text-white': isSelected(perm.id, '{{ list_key }}'),
-                    'hover:bg-orange-100': !isSelected(perm.id, '{{ list_key }}'),
-                    'border-b border-gray-200': true
-                 }"
-                 class="px-4 py-2 cursor-pointer text-sm transition-colors duration-150"
-                 x-text="perm.name">
-            </div>
-        </template>
-        
-        <template x-if="getFilteredList('{{ list_key }}').length === 0">
-            <div class="p-4 text-center text-gray-400 text-xs italic">No hay elementos</div>
-        </template>
+    <div class="flex-1 border border-gray-200 rounded-pushak overflow-y-auto bg-gray-50 select-none custom-scrollbar"
+         data-list-container="{{ list_key }}">
+        <!-- Items generados por JavaScript -->
     </div>
 </div>
