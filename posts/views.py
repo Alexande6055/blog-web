@@ -6,7 +6,9 @@ La lógica real se movió a CBV en:
 """
 
 from posts.auth.views import LoginView, LogoutView
-from posts.roles.views import BuscarRolesView, RolFormView, RolesHomeView
+from apps.Roles_grupos.views.roles_view import BuscarRolesView
+from apps.Roles_grupos.views.role_form_view import RolFormView
+from apps.Roles_grupos.views.roles_page_view import RolesHomeView
 
 # Roles / Groups
 home = RolesHomeView.as_view()

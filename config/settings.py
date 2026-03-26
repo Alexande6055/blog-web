@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'import_export',
+    'apps.Roles_grupos',
+    'apps.Permisos',
     'posts'
 ]
 # Esto le dice a Django: "No uses tu tabla de usuarios, usa la mía en la app posts"
