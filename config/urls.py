@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from posts import views  # Importamos el archivo completo para acceder a todas las funciones
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name="home"),

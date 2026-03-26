@@ -1,11 +1,10 @@
 import json
-
-from apps.Permisos.selectors.permisos import listar_permisos
-from apps.Roles_grupos.services import create_rol, update_rol
-from apps.Roles_grupos.selectors.roles import listar_roles,obtener_rol_con_permisos
 from django.shortcuts import redirect, render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
+from apps.Permisos.selectors.permisos import listar_permisos
+from apps.Roles_grupos.services.services_roles import create_rol, update_rol
+from apps.Roles_grupos.selectors.roles import listar_roles,obtener_rol_con_permisos
 
 
 class RolesHomeView(LoginRequiredMixin, View):
