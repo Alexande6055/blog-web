@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from import_export.admin import (
@@ -5,9 +6,9 @@ from import_export.admin import (
 )  # Requiere: pip install django-import-export
 from import_export import resources, fields
 from import_export.widgets import ForeignKeyWidget
-from .models import User, Departamento, Sucursal, Log, EventoLog
-
-
+from .models import Departamento, Sucursal, Log, EventoLog
+from django.contrib.auth import get_user_model 
+User = get_user_model()
 class LogResource(resources.ModelResource):
     # Traemos campos específicos de la relación EventoLog usando doble guion bajo
     evento_nombre = fields.Field(

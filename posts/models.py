@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.utils import timezone
+from django.conf import settings
 
 
 # ============================
@@ -43,55 +44,6 @@ class Sucursal(models.Model):
 
 
 # ============================
-# 2. USUARIO (extiende AbstractUser)
-# ============================
-class User(AbstractUser):
-    # Campos adicionales
-    nombre_completo = models.CharField(max_length=255)
-    ci = models.CharField(
-        max_length=20, unique=True, verbose_name="Cédula de Identidad", db_index=True
-    )
-    cargo = models.CharField(max_length=100, blank=True)
-
-    # Relaciones con sucursal y departamento (SET_NULL porque si se eliminan, no queremos perder el usuario)
-    departamento = models.ForeignKey(
-        Departamento,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name="usuarios",
-    )
-    sucursal = models.ForeignKey(
-        Sucursal,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name="usuarios",
-    )
-
-    # Auditoría (update_at)
-    update_at = models.DateTimeField(auto_now=True)
-
-    # Note: date_joined ya existe en AbstractUser (fecha de creación)
-
-    class Meta:
-        verbose_name = "Usuario"
-        verbose_name_plural = "Usuarios"
-        # Permisos personalizados (se crearán con makemigrations)
-        permissions = [
-            ("puede_aprobar_documentos", "Puede aprobar documentos pendientes"),
-            ("puede_ver_logs", "Puede ver los logs del sistema"),
-            ("puede_gestionar_usuarios", "Puede crear y editar usuarios"),
-            ("puede_gestionar_tipos_documento", "Puede gestionar tipos de documento"),
-            ("puede_ver_historial", "Puede ver historial de cambios de documentos"),
-            ("puede_ver_visualizaciones", "Puede ver quién visualizó documentos"),
-        ]
-
-    def __str__(self):
-        return f"{self.nombre_completo} ({self.username})"
-
-
-# ============================
 # 2. CARPETA
 # ============================
 class Carpeta(models.Model):
@@ -126,7 +78,10 @@ class Carpeta(models.Model):
 
     # Auditoría básica
     creado_por = models.ForeignKey(
-        User, on_delete=models.SET_NULL, null=True, related_name="carpetas_creadas"
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="carpetas_creadas",
     )
     fecha_creacion = models.DateTimeField(auto_now_add=True)
 
@@ -210,7 +165,7 @@ class Archivo(models.Model):
 
     # Relaciones
     id_usuario_subida = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         on_delete=models.PROTECT,  # No se puede eliminar usuario que subió documentos
         related_name="documentos_subidos",
     )
@@ -251,7 +206,7 @@ class Archivo(models.Model):
 
     # Bloqueo para edición
     bloqueado_por = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -262,7 +217,7 @@ class Archivo(models.Model):
     # Aprobación
     fecha_aprobacion = models.DateTimeField(null=True, blank=True)
     id_usuario_aprobacion = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -355,7 +310,9 @@ class Notificacion(models.Model):
     ]
 
     usuario_destino = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="notificaciones"
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="notificaciones",
     )
     documento = models.ForeignKey(
         Archivo,
@@ -393,7 +350,9 @@ class AccesoDocumento(models.Model):
         ("INTENTO_FALLIDO", "Intento fallido"),
     ]
 
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name="accesos")
+    usuario = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="accesos"
+    )
     documento = models.ForeignKey(
         Archivo, on_delete=models.CASCADE, related_name="accesos"
     )
@@ -440,7 +399,7 @@ class Log(models.Model):
 
     evento = models.ForeignKey(EventoLog, on_delete=models.CASCADE, related_name="logs")
     usuario = models.ForeignKey(
-        User, on_delete=models.SET_NULL, null=True, blank=True, related_name="logs"
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name="logs"
     )
     direccion_ip = models.GenericIPAddressField()
     fecha_hora = models.DateTimeField(auto_now_add=True, db_index=True)

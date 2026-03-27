@@ -1,6 +1,9 @@
 <aside
     class="w-64 h-[calc(100vh-4rem)] sticky top-16 bg-[var(--color-bg-sidebar)] shadow-lg p-4 flex flex-col justify-between">
     <nav class="flex flex-col gap-3">
+    {% include "ui/snippets/_nav_button.html" with texto_boton="Administrar de roles" url_destino="home" %}
+
+    {% include "ui/snippets/_nav_button.html" with texto_boton="Pagina Perdida" url_destino="rol_formulario" %}
         <a href="{% url 'home' %}" class="...">Home</a>
         <a href="{% url 'admin:index' %}" class="...">Administrar Usuarios</a>
     </nav>

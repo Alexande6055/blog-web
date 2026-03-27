@@ -1,0 +1,4 @@
+<a href="{% url url_destino %}" 
+   class="px-4 py-2 rounded-lg transition-colors hover:bg-gray-100 {% if request.resolver_match.url_name == url_destino %}text-primary font-bold{% else %}text-gray-600{% endif %}">
+    {{ texto_boton }}
+</a>

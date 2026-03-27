@@ -51,11 +51,12 @@ INSTALLED_APPS = [
     'apps.Roles_grupos',
     'apps.Permisos',
     'apps.login_personalizado',
+    'apps.usuarios',
     'apps.ui',
     'posts'
 ]
 # Esto le dice a Django: "No uses tu tabla de usuarios, usa la mía en la app posts"
-AUTH_USER_MODEL = 'posts.User'
+AUTH_USER_MODEL = 'usuarios.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
