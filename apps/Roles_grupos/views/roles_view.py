@@ -3,7 +3,7 @@ from django.contrib.auth.models import Group
 from django.db.models import Count
 from django.shortcuts import  render
 from django.views import View
-from apps.Permisos.selectors.permisos import listar_permisos
+from apps.permisos.selectors.permisos import listar_permisos
 from apps.Roles_grupos.selectors.roles import listar_roles
 
 class BuscarRolesView(LoginRequiredMixin, View):

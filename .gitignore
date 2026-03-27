@@ -1,2 +1,16 @@
-env/
+# Python compilado
 __pycache__/
+*.py[cod]
+*$py.class
+
+# Entornos virtuales
+venv/
+env/
+.env/
+ENV/
+
+# Archivos de Django
+db.sqlite3
+db.sqlite3-journal
+media/
+.sonar/

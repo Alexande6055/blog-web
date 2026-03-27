@@ -1,0 +1,34 @@
+<div class="overflow-x-auto max-h-48 overflow-y-auto border rounded-md">
+  <table class="w-full text-left text-sm">
+    <thead class="bg-gray-50 border-b">
+      <tr>
+        <th class="py-2 px-3">ID</th>
+        <th class="py-2 px-3">Nombre</th>
+        <th class="py-2 px-3 text-right">Acción</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y">
+      {% for departamento in departamentos %}
+      <tr class="hover:bg-gray-50">
+        <td class="py-2 px-3 font-mono text-xs">#{{ departamento.id }}</td>
+        <td class="py-2 px-3">{{ departamento.nombre }}</td>
+        <td class="py-2 px-3 text-right">
+          <button
+            type="button"
+            onclick="seleccionarDepartamento('{{ departamento.id }}', '{{ departamento.nombre|escapejs }}')"
+            class="text-primary font-bold hover:underline"
+          >
+            Seleccionar
+          </button>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="3" class="p-4 text-center text-gray-400">
+          No hay departamentos.
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

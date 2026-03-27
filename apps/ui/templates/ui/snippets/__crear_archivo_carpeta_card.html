@@ -1,0 +1,53 @@
+<!-- 
+ crear_archivo_carpeta_card.html 
+ Este es un componente que cuadrado con un mas donde se muestra para 
+ poder crear carpetas o archivos, segun el contexto dato
+ -->
+<div>
+  {% if tipo == 'carpeta' %}
+  <div
+    data-slot="card"
+    class="bg-surface flex flex-col gap-6 rounded-pushak border py-6 shadow-sm group hover:shadow-md transition-shadow cursor-pointer items-center justify-center"
+    onclick="abrirModalCarpeta()"
+    >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-plus h-6 w-6 text-primary"
+    >
+      <line x1="12" y1="5" x2="12" y2="19"></line>
+      <line x1="5" y1="12" x2="19" y2="12"></line>
+    </svg>
+    <p class="text-sm text-secondary">Agregar Carpeta</p>
+  </div>
+  {% elif tipo == 'archivo' and carpeta_actual_id != None %}
+  <div
+    data-slot="card"
+    class="bg-surface flex flex-col gap-6 rounded-pushak border py-6 shadow-sm group hover:shadow-md transition-shadow cursor-pointer items-center justify-center"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-plus h-6 w-6 text-primary"
+    >
+      <line x1="12" y1="5" x2="12" y2="19"></line>
+      <line x1="5" y1="12" x2="19" y2="12"></line>
+    </svg>
+    <p class="text-sm text-secondary">Agregar Archivo</p>
+  </div>
+  {% endif %}
+</div>

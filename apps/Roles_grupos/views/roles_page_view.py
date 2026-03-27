@@ -2,7 +2,7 @@ import json
 from django.shortcuts import redirect, render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
-from apps.Permisos.selectors.permisos import listar_permisos
+from apps.permisos.selectors.permisos import listar_permisos
 from apps.Roles_grupos.services.services_roles import create_rol, update_rol
 from apps.Roles_grupos.selectors.roles import listar_roles,obtener_rol_con_permisos
 
@@ -68,7 +68,7 @@ class RolesHomeView(LoginRequiredMixin, View):
         if request.headers.get("HX-Request"):
             roles = listar_roles()
             return render(
-                request, "ui/snippets/_tabla_roles.html", {"roles": roles}
+                request, "snippets/_tabla_roles.html", {"roles": roles}
             )
 
         return redirect("home")

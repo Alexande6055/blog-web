@@ -12,25 +12,27 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-LOGIN_URL = 'login'  # El nombre que le diste a la URL de login en urls.py
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'login'
+LOGIN_URL = "login"  # El nombre que le diste a la URL de login en urls.py
+LOGIN_REDIRECT_URL = "home"
+LOGOUT_REDIRECT_URL = "login"
+NAS_ROOT_PATH = 'C:\\Users\\pasanteSistemas1\\Documents\\Simulador-nas'  # Ruta absoluta donde está montado el NAS
 
 # La URL que se usará en el HTML
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
 # La carpeta real en tu computadora donde guardarás las imágenes
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, "static"),
 ]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-95f)0(zdh2saq(0s&+ovlv^u)3%(#l_#cu05cm2ili7t7jp+xw'
+SECRET_KEY = "django-insecure-95f)0(zdh2saq(0s&+ovlv^u)3%(#l_#cu05cm2ili7t7jp+xw"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -41,84 +43,94 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'import_export',
-    'apps.Roles_grupos',
-    'apps.Permisos',
-    'apps.login_personalizado',
-    'apps.usuarios',
-    'apps.ui',
-    'posts'
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "import_export",
+    "apps.usuarios",
+    "apps.login_personalizado",
+    "apps.Roles_grupos",
+    "apps.ui",
+    "apps.permisos",
+    "apps.directorios",
+    "apps.departamento_sucursal",
+    "apps.archivo",
+    "posts",
 ]
 # Esto le dice a Django: "No uses tu tabla de usuarios, usa la mía en la app posts"
-AUTH_USER_MODEL = 'usuarios.User'
+AUTH_USER_MODEL = "usuarios.User"
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'posts.middleware.AuditLogMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "posts.middleware.AuditLogMiddleware",
 ]
 
-ROOT_URLCONF = 'config.urls'
+ROOT_URLCONF = "config.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'], # Esto permite una carpeta templates global        
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [BASE_DIR / "templates"],  # Esto permite una carpeta templates global
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'config.wsgi.application'
+WSGI_APPLICATION = "config.wsgi.application"
 
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-       'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sistema',
-        'USER': 'sistema_user',
-        'PASSWORD': 'sistema_password',
-        'HOST': 'localhost',  # O la IP de tu servidor
-        'PORT': '5438',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "sistema_kke4",
+        "USER": "sistema_user",
+        "PASSWORD": "1yy9VjUjOOzXCkGJ36trzCow63pzR1RS",
+        "HOST": "dpg-d739glp4tr6s73drbaqg-a.oregon-postgres.render.com",  # O la IP de tu servidor
+        "PORT": "5432",
     }
 }
-
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+"""
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -126,8 +138,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = 'es-ec'  # 'es' es español general, 'es-ec' es específico de Ecuador
-TIME_ZONE = 'America/Guayaquil' 
+LANGUAGE_CODE = "es-ec"  # 'es' es español general, 'es-ec' es específico de Ecuador
+TIME_ZONE = "America/Guayaquil"
 USE_I18N = True
 
 USE_TZ = True
@@ -136,4 +148,4 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"

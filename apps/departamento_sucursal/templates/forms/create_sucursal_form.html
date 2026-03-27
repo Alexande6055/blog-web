@@ -1,0 +1,50 @@
+
+
+    <form
+      action="{% url 'crear_sucursal' %}"
+      method="POST"
+      class="flex flex-col gap-3"
+    >
+      {% csrf_token %}
+      <input
+        type="text"
+        name="nombre"
+        placeholder="Nombre (Ej: Matriz)"
+        required
+        class="border p-2 rounded-md"
+      />
+      <input
+        type="text"
+        name="direccion"
+        placeholder="Dirección"
+        required
+        class="border p-2 rounded-md"
+      />
+      <input
+        type="text"
+        name="telefono"
+        placeholder="Teléfono"
+        required
+        class="border p-2 rounded-md"
+      />
+
+      <div class="flex justify-end gap-2 mt-2">
+        <button
+          type="button"
+          onclick="
+            document
+              .getElementById('modal-nueva-sucursal')
+              .classList.add('hidden')
+          "
+          class="px-3 py-1.5 text-sm bg-gray-100 rounded"
+        >
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          class="px-4 py-1.5 text-sm bg-secondary text-white rounded font-bold"
+        >
+          Guardar Sucursal
+        </button>
+      </div>
+    </form>

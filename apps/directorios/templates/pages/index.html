@@ -1,0 +1,94 @@
+{% extends 'ui/pages/base.html' %} 
+{% block title %}Directorios - Pushak Runa{%endblock %} 
+{% block content %}
+<div class="p-6">
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold text-secondary">Mis Directorios</h1>
+    <p class="text-secondary">
+      Gestiona y navega por las carpetas del sistema.
+    </p>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      {% for carpeta in lista_carpetas %} 
+        {% include 'ui/snippets/__carpeta_card.html' %} 
+      {% empty %}
+        <div class="col-span-full py-10 text-center">
+          <p class="text-secondary">No se encontraron carpetas activas.</p>
+        </div>
+      {% endfor %}
+      {% include 'snippets/__crear_archivo_carpeta_card.html' with tipo='carpeta' %}
+    </div>
+    
+    <div id="modal-crear-carpeta" class="hidden">
+        {% include 'forms/create_carpeta_form.html' %}
+    </div>
+  </div>
+
+  <div class="mt-8"> 
+    {% for archivo in lista_archivos %} 
+      {% include 'apps.archivo/snippets/__archivo_card.html' %} 
+    {% empty %}
+      <div class="py-10 text-center">
+        <p class="text-secondary">No se encontraron archivos vigentes.</p>
+      </div>
+    {% endfor %}
+    {% include 'snippets/__crear_archivo_carpeta_card.html' with tipo='archivo' %}
+    </div>
+  </div>
+</div>
+
+
+<script>
+   function abrirModalCarpeta() {
+    document.getElementById('modal-crear-carpeta').classList.remove('hidden');
+  }
+  function cerrarModalCarpeta() {
+    document.getElementById('modal-crear-carpeta').classList.add('hidden');
+  }
+  function seleccionarSucursal(id, nombre) {
+    // 1. Buscamos el input oculto que está en el formulario de la CARPETA
+    const inputSucursal = document.getElementById("id_sucursal_seleccionada");
+    const statusText = document.getElementById("status-sucursal");
+
+    if (inputSucursal) {
+      // 2. Asignamos el ID seleccionado al input que se enviará por POST
+      inputSucursal.value = id;
+
+      // 3. Feedback visual para el usuario en el modal
+      statusText.innerHTML = `✅ Sucursal seleccionada: <span class="text-secondary font-bold">${nombre}</span>`;
+      statusText.classList.remove("text-amber-600", "bg-amber-50", "border-amber-200");
+      statusText.classList.add("text-green-600", "bg-green-50", "border-green-200");
+      
+      console.log("Sucursal vinculada:", id); // Para debug en consola
+    } else {
+      console.error("No se encontró el input 'id_sucursal_seleccionada'. Verifica que el ID sea correcto.");
+    }
+  }
+  function seleccionarDepartamento(id, nombre) {
+    const inputDepartamento = document.getElementById("id_departamento_seleccionado");
+    const statusText = document.getElementById("status-departamento");
+
+    if (inputDepartamento) {
+      inputDepartamento.value = id;
+
+      statusText.innerHTML = `✅ Departamento seleccionado: <span class="text-secondary font-bold">${nombre}</span>`;
+      statusText.classList.remove("text-amber-600", "bg-amber-50", "border-amber-200");
+      statusText.classList.add("text-green-600", "bg-green-50", "border-green-200");
+      
+      console.log("Departamento vinculado:", id);
+    } else {
+      console.error("No se encontró el input 'id_departamento_seleccionado'. Verifica que el ID sea correcto.");
+    }
+  }
+
+  function cerrarModalCarpeta() {
+    // Esta función cierra el modal principal de la carpeta
+    // Si usas 'this.closest(form).remove()', el modal desaparece del DOM. 
+    // Es mejor usar 'classList.add(hidden)' si el modal está en el HTML base.
+    const modal = document.getElementById('modal-crear-carpeta');
+    if (modal) {
+      modal.classList.add('hidden');
+    }
+  }
+</script>
+{% endblock %}

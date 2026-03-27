@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import  render
 from django.views import View
 from apps.Roles_grupos.selectors.roles import obtener_rol_con_permisos
-from apps.Permisos.selectors.permisos import listar_permisos
+from apps.permisos.selectors.permisos import listar_permisos
 
 class RolFormView(LoginRequiredMixin, View):
     def get(self, request, rol_id=None, *args, **kwargs):

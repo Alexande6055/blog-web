@@ -1,6 +1,6 @@
 from django.contrib.auth.models import Group
 from django.db.models import Count
-from apps.Permisos.selectors.permisos import listar_permisos_excluyendo
+from apps.permisos.selectors.permisos import listar_permisos_excluyendo
 
 
 def listar_roles():

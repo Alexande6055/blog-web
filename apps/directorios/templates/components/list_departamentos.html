@@ -1,0 +1,51 @@
+<div class="bg-surface rounded-pushak border p-4 shadow-sm">
+  <div class="flex items-center justify-between mb-4">
+    <h3 class="font-bold text-secondary">Seleccionar Departamento</h3>
+    <button
+      type="button"
+      onclick="
+        document
+          .getElementById('modal-nuevo-departamento')
+          .classList.remove('hidden')
+      "
+      class="text-xs bg-primary text-white px-3 py-1 rounded-md hover:bg-primary/90"
+    >
+      + Nuevo Departamento
+    </button>
+  </div>
+
+  <div class="overflow-x-auto max-h-48 overflow-y-auto border rounded-md">
+    <table class="w-full text-left text-sm">
+      <thead class="bg-gray-50 border-b">
+        <tr>
+          <th class="py-2 px-3">ID</th>
+          <th class="py-2 px-3">Nombre</th>
+          <th class="py-2 px-3 text-right">Acción</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y">
+        {% for departamento in lista_departamentos %}
+        <tr class="hover:bg-gray-50">
+          <td class="py-2 px-3 font-mono text-xs">#{{ departamento.id }}</td>
+          <td class="py-2 px-3">{{ departamento.nombre }}</td>
+          <td class="py-2 px-3 text-right">
+            <button
+              type="button"
+              onclick="seleccionarDepartamento('{{ departamento.id }}', '{{ departamento.nombre }}')"
+              class="text-primary font-bold hover:underline"
+            >
+              Seleccionar
+            </button>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="3" class="p-4 text-center text-gray-400">
+            No hay departamentos.
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>

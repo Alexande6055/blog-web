@@ -1,0 +1,42 @@
+<div
+  data-slot="card"
+  class="bg-surface flex flex-col gap-6 rounded-pushak border py-6 shadow-sm group hover:shadow-md transition-shadow cursor-pointer relative"
+>
+  <a href="{% url 'carpeta' carpeta.id %}" class="absolute inset-0 z-0"> </a>
+
+  <div data-slot="card-content" class="p-4 z-10">
+    <div class="flex items-start justify-between mb-3">
+      <div
+        class="h-12 w-12 rounded-pushak bg-bg-sidebar flex items-center justify-center"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-folder-open h-6 w-6 text-primary"
+        >
+          <path
+            d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2"
+          ></path>
+        </svg>
+      </div>
+    </div>
+
+    <h3 class="font-medium text-sm mb-1 text-secondary">
+      {{ carpeta.nombre }}
+    </h3>
+    <p class="text-xs text-secondary">
+      {{ carpeta.total_archivos }} documentos • {{ carpeta.total_subcarpetas }}
+      subcarpetas
+    </p>
+    <p class="text-xs text-secondary mt-1">
+      Creada: {{ carpeta.fecha_creacion|date:"d M Y" }}
+    </p>
+  </div>
+</div>

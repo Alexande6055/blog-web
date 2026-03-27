@@ -1,7 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-from posts.models import Departamento, Sucursal
 
 class User(AbstractUser):
     # Campos adicionales
@@ -12,21 +11,13 @@ class User(AbstractUser):
     cargo = models.CharField(max_length=100, blank=True)
 
     # Relaciones con sucursal y departamento (SET_NULL porque si se eliminan, no queremos perder el usuario)
-    departamento = models.ForeignKey(
-        Departamento,
+    departamento_sucursal = models.ForeignKey(
+        "departamento_sucursal.DepartamentoSucursal",
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
         related_name="usuarios",
     )
-    sucursal = models.ForeignKey(
-        Sucursal,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name="usuarios",
-    )
-
     # Auditoría (update_at)
     update_at = models.DateTimeField(auto_now=True)
 
@@ -47,4 +38,3 @@ class User(AbstractUser):
 
     def __str__(self):
         return f"{self.nombre_completo} ({self.username})"
-

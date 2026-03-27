@@ -4,4 +4,6 @@ from .views import logout_view,login_view
 urlpatterns = [
     path("login/", login_view.LoginView.as_view(), name="login"),
     path("logout/", logout_view.LogoutView.as_view(), name="logout"),
+    path("admin/", admin.site.urls),
+
 ]
