@@ -62,16 +62,16 @@
 
 <body class="min-h-screen bg-[var(--color-bg-base)]">
 
-    {% include 'includes/header.html' %}
+    {% include 'ui/layout/header.html' %}
 
     <div class="flex">
-        {% include 'includes/sidebar.html' %}
+        {% include 'ui/layout/sidebar.html' %}
 
         <main class="flex-1">
             {% block content %}
             {% endblock %}
 
-            {% include 'includes/session_clock.html' %}
+            {% include 'ui/layout/session_clock.html' %}
         </main>
     </div>
 

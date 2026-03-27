@@ -22,7 +22,7 @@ class RolesHomeView(LoginRequiredMixin, View):
 
         return render(
             request,
-            "roles/index.html",
+            "pages/list_roles.html",
             {
                 "roles": roles,
                 "rol_a_editar": rol_a_editar,

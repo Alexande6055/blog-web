@@ -20,7 +20,7 @@
         <input type="hidden" name="permissions" id="permissions-input" value="[]">
 
         <div class="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 items-center">
-            {% include "includes/snippets/_permission_list.html" with list_key="available" label="Permisos Disponibles" %}
+            {% include "ui/snippets/_permission_list_card.html" with list_key="available" label="Permisos Disponibles" %}
 
             <div class="flex md:flex-col gap-3 justify-center items-center">
                 <button id="btn-move-right" type="button" 
@@ -35,7 +35,7 @@
                 </button>
             </div>
 
-            {% include "includes/snippets/_permission_list.html" with list_key="assigned" label="Asignados al Rol" %}
+            {% include "ui/snippets/_permission_list_card.html" with list_key="assigned" label="Asignados al Rol" %}
         </div>
 
         <div class="flex items-center justify-end gap-4 pt-6 mt-4 border-t border-gray-100">

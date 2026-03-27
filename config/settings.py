@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'import_export',
     'apps.Roles_grupos',
     'apps.Permisos',
+    'apps.login_personalizado',
+    'apps.ui',
     'posts'
 ]
 # Esto le dice a Django: "No uses tu tabla de usuarios, usa la mía en la app posts"
