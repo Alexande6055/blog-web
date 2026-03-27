@@ -38,7 +38,7 @@ class RolesHomeView(LoginRequiredMixin, View):
             if request.headers.get("HX-Request"):
                 return render(
                     request,
-                    "includes/snippets/_tabla_roles.html",
+                    "snippets/_tabla_roles.html",
                     {
                         "error": "El nombre del grupo es requerido",
                         "roles": listar_roles(),
@@ -60,7 +60,7 @@ class RolesHomeView(LoginRequiredMixin, View):
             if request.headers.get("HX-Request"):
                 return render(
                     request,
-                    "includes/snippets/_tabla_roles.html",
+                    "snippets/_tabla_roles.html",
                     {"error": f"Error: {str(e)}", "roles": listar_roles()},
                 )
             return redirect("home")
@@ -68,7 +68,7 @@ class RolesHomeView(LoginRequiredMixin, View):
         if request.headers.get("HX-Request"):
             roles = listar_roles()
             return render(
-                request, "includes/snippets/_tabla_roles.html", {"roles": roles}
+                request, "ui/snippets/_tabla_roles.html", {"roles": roles}
             )
 
         return redirect("home")

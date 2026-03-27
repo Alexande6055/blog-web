@@ -7,7 +7,7 @@
                 <td class="px-6 py-4 text-sm text-right">
                     <button type="button"
                             hx-get="{% url 'rol_formulario_edit' rol.id %}"
-                            hx-target="#contenedor-formulario"
+                            hx-target="#dinamico-form-content"
                             hx-swap="innerHTML"
                             onclick="document.getElementById('contenedor-formulario').classList.remove('hidden')"
                             class="text-primary hover:text-orange-700 font-semibold mr-4 transition-colors">

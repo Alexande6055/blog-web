@@ -25,7 +25,7 @@ class BuscarRolesView(LoginRequiredMixin, View):
             )
 
         if request.headers.get('HX-Request'):
-            return render(request, 'includes/snippets/_tabla_roles.html', {'roles': roles})
+            return render(request, 'snippets/_tabla_roles.html', {'roles': roles})
 
         return render(
             request,

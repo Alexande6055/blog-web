@@ -16,7 +16,7 @@ class RolFormView(LoginRequiredMixin, View):
 
         return render(
             request,
-            'includes/formularios/create_edit_grupo_form.html',
+            'forms/create_edit_grupo_form.html',
             {
                 'rol_a_editar': rol_a_editar,
                 'permisos_disponibles': permisos_disponibles,
